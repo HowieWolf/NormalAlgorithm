@@ -23,18 +23,12 @@ public class MergeSort {
         if (start >= end) {
             return;
         }
-        if (end - start == 1) {
-            if (data[end] < data[start]) {
-                int t = data[end];
-                data[end] = data[start];
-                data[start] = t;
-            }
-        } else {
-            int middle = (start + end) >> 1;
-            sortInner(data, start, middle);
-            sortInner(data, middle + 1, end);
-            merge(data, start, middle, end);
-        }
+        int middle = (start + end) >> 1;
+        // 必须分为 [start, middle] 和 [middle+1,end] 两个
+        // 如果分为 [start, middle-1] 和 [middle,end]，当end-start=1时，就会无限递归
+        sortInner(data, start, middle);
+        sortInner(data, middle + 1, end);
+        merge(data, start, middle, end);
     }
 
     private void merge(int[] data, int start, int middle, int end) {
@@ -62,7 +56,7 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        int[] array = ArrayUtils.newIntArray(15, 20);
+        int[] array = ArrayUtils.newIntArray(5, 20);
         System.out.println(Arrays.toString(array));
         MergeSort sort = new MergeSort();
         sort.sort(array);
