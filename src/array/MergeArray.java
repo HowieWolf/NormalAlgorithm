@@ -27,43 +27,9 @@ public class MergeArray {
             nums1[index--] = current;
         }
         // 如果 nums2 中还有数据，n >=0，则需要复制到 nums1 中
+        // 如果是 num2 已经遍历完毕，则 num1 无需处理
         while (n >= 0) {
             nums1[index--] = nums2[n--];
-        }
-    }
-
-    /**
-     * 思路：先插入，在合并
-     */
-    public void merge1(int[] nums1, int m, int[] nums2, int n) {
-        if (n == 0) {
-            return;
-        }
-        int i1 = 0;
-        int i2 = 0;
-        // 这里要使用原数组长度作为判断条件
-        // 将 nums2 中部分数据插入到 nums1 中
-        while (i2 < n && i1 < m) {
-            int n1 = nums1[i1];
-            int n2 = nums2[i2];
-            if (n2 < n1) {
-                moveRight(nums1, i1, m - 1);
-                m++;
-                nums1[i1] = n2;
-                i2++;
-            }
-            i1++;
-        }
-        // 这里是将剩余的 nums2 中的数据合并到 nums1 中
-        while (i2 < n && i1 < nums1.length) {
-            nums1[i1++] = nums2[i2++];
-        }
-    }
-
-    private void moveRight(int[] data, int start, int end) {
-        while (end >= start) {
-            data[end + 1] = data[end];
-            end--;
         }
     }
 

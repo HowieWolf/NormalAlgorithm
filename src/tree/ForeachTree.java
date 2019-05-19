@@ -26,32 +26,6 @@ public class ForeachTree {
     }
 
     /**
-     * 深度优先遍历
-     */
-    public void foreachDeeply() {
-    }
-
-    /**
-     * 先序遍历
-     */
-    public void foreachFirst() {
-        Stack<BinaryTreeNode<Integer>> stack = new Stack<>();
-        stack.push(root);
-        BinaryTreeNode head = null;
-        while (!stack.isEmpty()) {
-            head = stack.pop();
-            System.out.println(head.getData());
-            if (head.right != null) {
-                stack.push(head.right);
-            }
-            if (head.left != null) {
-                stack.push(head.left);
-            }
-        }
-
-    }
-
-    /**
      * 先序遍历
      * 与中序遍历形成对比，仅仅是输出的时机不同
      */
@@ -100,7 +74,6 @@ public class ForeachTree {
     public static void main(String... args) {
         BinaryTreeNode<Integer> root = BinaryTreeUtils.newBinaryTree(7);
         ForeachTree tree = new ForeachTree(root);
-        tree.foreachDeeply();
         System.out.println();
     }
 }
