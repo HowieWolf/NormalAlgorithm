@@ -9,4 +9,14 @@ public class ArrayUtils {
         }
         return result;
     }
+
+    public static boolean isNullOrEmpty(int[] data) {
+        return data == null || data.length == 0;
+    }
+
+    public static void swap(int[] data, int index1, int index2) {
+        int i = data[index1];
+        data[index1] = data[index2];
+        data[index2] = i;
+    }
 }

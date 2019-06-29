@@ -22,14 +22,15 @@ public class MergeArray {
         m--;
         n--;
         // 从后向前插入
-        while (m >= 0 && n >= 0) {
-            int current = nums1[m] > nums2[n] ? nums1[m--] : nums2[n--];
-            nums1[index--] = current;
-        }
-        // 如果 nums2 中还有数据，n >=0，则需要复制到 nums1 中
-        // 如果是 num2 已经遍历完毕，则 num1 无需处理
+        // 如果 num2 已经取完了，说明已经全部合并进入 num1，可以结束
+        // 但这只能是没开辟新空间。如果是新开辟空间，将 num1 和 num2 合并，则不能这样
         while (n >= 0) {
-            nums1[index--] = nums2[n--];
+            // 如果 num1 已经取完，则直接取 num2 的数
+            if (m < 0 || nums2[n] > nums1[m]) {
+                nums1[index--] = nums2[n--];
+            } else {
+                nums1[index--] = nums1[m--];
+            }
         }
     }
 
