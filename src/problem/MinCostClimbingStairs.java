@@ -11,26 +11,27 @@ package problem;
  * 递推式  f(n) = min( f(n-1), f(n-2) ) + c(n)
  * 其中 c(n) 函数表示第 n 层的花费
  * 转成非递归
- *
  */
 public class MinCostClimbingStairs {
 
     public int minCostClimbingStairs(int[] cost) {
-        if (cost == null || cost.length == 0) {
+        if (cost == null) {
             return 0;
         }
-        if (cost.length == 1) {
-            return cost[0];
+        int len = cost.length;
+        if (len < 3) {
+            return cost[len - 1];
         }
-        int i0 = cost[0];
-        int i1 = cost[1];
+        int t1 = cost[0];
+        int t2 = cost[1];
         int index = 2;
-        while (index < cost.length) {
-            int t = Math.min(i0, i1) + cost[index++];
-            i0 = i1;
-            i1 = t;
+        while (index < len) {
+            int t = t1 > t2 ? t2 : t1 + cost[index];
+            t1 = t2;
+            t2 = t;
+            index++;
         }
-        return Math.min(i0, i1);
+        return t2;
     }
 
     public static void main(String[] args) {
