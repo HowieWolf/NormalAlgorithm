@@ -1,4 +1,4 @@
-package problem;
+package bit;
 
 /**
  * LeetCode 231

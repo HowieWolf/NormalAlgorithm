@@ -1,4 +1,4 @@
-package problem;
+package best;
 
 /**
  * 746. 使用最小花费爬楼梯
