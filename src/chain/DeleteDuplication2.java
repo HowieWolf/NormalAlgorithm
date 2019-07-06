@@ -25,7 +25,7 @@ public class DeleteDuplication2 {
 
         // 标识现在是否处于相同的阶段
         boolean isInSame = false;
-        
+
         while (next.next != null){
             // 如果两个节点值相同，直接后移next指针，并设标志位
             if (current.next.getData() == next.next.getData()){

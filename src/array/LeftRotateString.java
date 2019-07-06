@@ -1,6 +1,7 @@
-package problem;
+package array;
 
 /**
+ * 这个题目与 {@link RotateArray} 一样
  * 剑指 offer 42
  * 汇编语言中有一种移位指令叫做循环左移（ROL）
  * 现在有个简单的任务，就是用字符串模拟这个指令的运算结果。
