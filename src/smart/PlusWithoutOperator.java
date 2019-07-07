@@ -1,4 +1,4 @@
-package problem;
+package smart;
 
 /**
  * 不使用加减乘除运算符计算加法
