@@ -1,64 +1,42 @@
 package problem;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class AllSubstring {
 
-    private String original = "";
-
-    public List<String> allSubstring() {
+    public List<String> allSubstring(String origin) {
         List<String> result = new ArrayList<>();
-        int range = (int) Math.pow(2, original.length());
+        int range = (int) Math.pow(2, origin.length());
         for (int i = 0; i < range; i++) {
-            String binaryString = toBinaryString(i);
-            String sub = getSubstring(binaryString);
+            String sub = getSubString(origin, i);
             result.add(sub);
         }
         return result;
     }
 
     /**
-     * 十进制转任何进制
-     * 使用除后取余法
-     * @param index
-     * @return
+     * 使用位与运算可知每一位上是否是 0 或 1
      */
-    private String toBinaryString(int index) {
-        StringBuilder builder = new StringBuilder();
-        int shang = 0;
-        int yushu = 0;
-        do {
-            shang = index / 2;
-            yushu = index % 2;
-            builder.insert(0, yushu);
-            index = shang;
-        } while (shang != 0);
-        int less = original.length() - builder.length();
-        for (int i = 0; i < less; i++) {
-            builder.insert(0, '0');
-        }
-        return builder.toString();
-    }
-
-    private String getSubstring(String select) {
-        if (select.length() != original.length()) {
-            return "";
-        }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < select.length(); i++) {
-            if (select.charAt(i) == '1') {
-                builder.append(original.charAt(i));
+    private String getSubString(String origin, int select) {
+        int len = origin.length();
+        int flag = 1;
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if ((select & flag) > 0) {
+                result.append(origin.charAt(i));
             }
+            flag <<= 1;
         }
-        return builder.toString();
+        return result.toString();
     }
 
     public static void main(String[] args) {
         AllSubstring test = new AllSubstring();
-        test.original = "0123";
-        List<String> result = test.allSubstring();
+        List<String> result = test.allSubstring("0123");
         System.out.println(result.size());
+        result.sort(Comparator.comparingInt(String::length));
         for (String s : result) {
             System.out.println(s);
         }
