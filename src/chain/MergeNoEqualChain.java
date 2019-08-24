@@ -1,73 +1,72 @@
 package chain;
 
-import data.ListNode;
-import utils.ChainUtils;
 
 /**
  * 合并有序不重复单链表
  * 要求合并后也不能重复
+ * 思路：
+ * 必须每个节点都需要遍历
  */
 public class MergeNoEqualChain {
 
-    private ListNode<Integer> result;
-    private ListNode<Integer> tail;
-
-    public void merge(ListNode<Integer> c1, ListNode<Integer> c2) {
-        clean();
+    public ListNode merge(ListNode c1, ListNode c2) {
+        ListNode head = new ListNode(0);
+        ListNode tail = head;
+        // 当前重复的节点
+        ListNode current = null;
         while (c1 != null || c2 != null) {
-            // 其中一条链为 null
+            // 重复节点需要首先清除，一次只清除一个
+            if (current != null) {
+                if (c2 != null && c2.val == current.val) {
+                    c2 = c2.next;
+                    continue;
+                }
+                if (c1 != null && c1.val == current.val) {
+                    c1 = c1.next;
+                    continue;
+                }
+            }
+            // 找寻要添加的节点
             if (c1 == null) {
-                mergeToTail(c2);
-                return;
-            }
-            if (c2 == null) {
-                mergeToTail(c1);
-                return;
-            }
-            // 对比两条链的头节点
-            ListNode<Integer> currentNode;
-            if (c1.getData() < c2.getData()) {
-                currentNode = c1;
+                current = c2;
+                c2 = c2.next;
+            } else if (c2 == null) {
+                current = c1;
                 c1 = c1.next;
-            } else if (c1.getData() > c2.getData()) {
-                currentNode = c2;
+            } else if (c1.val > c2.val) {
+                current = c2;
                 c2 = c2.next;
             } else {
-                // 如果两个头节点相等
-                currentNode = c1;
+                current = c1;
                 c1 = c1.next;
-                c2 = c2.next;
             }
-            currentNode.next = null;
-            // 将 merge 节点合入结果
-            mergeToTail(currentNode);
+            // 判断是否能添加
+            if (hasSame(current, c1, c2)) {
+                continue;
+            }
+            // 加到链尾
+            current.next = null;
+            tail.next = current;
+            tail = current;
+            current = null;
         }
+        return head.next;
     }
 
-    private void clean() {
-        result = null;
-        tail = null;
-    }
-
-    private void mergeToTail(ListNode<Integer> c) {
-        if (result == null) {
-            result = c;
+    private boolean hasSame(ListNode current, ListNode c1, ListNode c2) {
+        if (c1 != null && c1.val == current.val) {
+            return true;
         }
-        if (tail == null) {
-            tail = c;
-        } else {
-            tail.next = c;
-            tail = tail.next;
-        }
+        return c2 != null && c2.val == current.val;
     }
 
     public static void main(String[] args) {
         MergeNoEqualChain p = new MergeNoEqualChain();
-        ListNode<Integer> c1 = ChainUtils.newChain(5, 0, 2);
+        ListNode c1 = ChainUtils.newChain(new int[]{2,3,4});
         System.out.println(ChainUtils.toString(c1));
-        ListNode<Integer> c2 = ChainUtils.newChain(5, 1, 2);
+        ListNode c2 = ChainUtils.newChain(new int[]{2,2});
         System.out.println(ChainUtils.toString(c2));
-        p.merge(c1, c2);
-        System.out.println(ChainUtils.toString(p.result));
+        ListNode result = p.merge(c1, c2);
+        System.out.println(ChainUtils.toString(result));
     }
 }
