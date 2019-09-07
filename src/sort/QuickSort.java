@@ -6,57 +6,52 @@ import java.util.Arrays;
 
 public class QuickSort {
 
-    private int[] data;
-
-    public void sort() {
-        sortInner(0, data.length - 1, 0);
-    }
-
-    private void sortInner(int start, int end, int flagIndex) {
-        flagIndex = sortOnce(start, end, flagIndex);
-        if (start < flagIndex) {
-            sortInner(start, flagIndex - 1, start);
+    public void sort(int[] data) {
+        if (data == null || data.length < 2) {
+            return;
         }
-        if (flagIndex < end) {
-            sortInner(flagIndex + 1, end, end);
+        int lastIndex = data.length - 1;
+        int flag = sortInner(data, 0, lastIndex);
+        if (flag > 1) {
+            sortInner(data, 0, flag - 1);
+        }
+        if (flag < lastIndex - 1) {
+            sortInner(data, flag + 1, lastIndex);
         }
     }
 
-    private int sortOnce(int start, int end, int flagIndex) {
-        while (start < end) {
-            while (start < flagIndex && data[start] <= data[flagIndex]) {
-                start++;
+    private int sortInner(int[] data, int left, int right) {
+        int middle = (left + right) >> 1;
+        while (left < right) {
+            while (left < middle && data[left] <= data[middle]) {
+                left++;
             }
-            if (start < flagIndex) {
-                swap(start, flagIndex);
-                flagIndex = start;
+            if (left < middle) {
+                swap(data, left, middle);
+                middle = left;
             }
-            while (flagIndex < end && data[flagIndex] <= data[end]) {
-                end--;
+            while (middle < right && data[middle] <= data[right]) {
+                right--;
             }
-            if (flagIndex < end) {
-                swap(flagIndex, end);
-                flagIndex = end;
+            if (middle < right) {
+                swap(data, right, middle);
+                middle = right;
             }
         }
-        return flagIndex;
+        return middle;
     }
 
-    private void swap(int a, int b) {
+    private void swap(int[] data, int a, int b) {
         int t = data[a];
         data[a] = data[b];
         data[b] = t;
     }
 
-    public QuickSort(int[] array) {
-        this.data = array;
-    }
-
     public static void main(String[] args) {
         int[] array = ArrayUtils.newIntArray(20, 50);
         System.out.println(Arrays.toString(array));
-        QuickSort sort = new QuickSort(array);
-        sort.sort();
-        System.out.println(Arrays.toString(sort.data));
+        QuickSort sort = new QuickSort();
+        sort.sort(array);
+        System.out.println(Arrays.toString(array));
     }
 }

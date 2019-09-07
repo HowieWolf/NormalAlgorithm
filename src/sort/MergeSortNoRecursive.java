@@ -6,35 +6,26 @@ import java.util.Arrays;
 
 /**
  * 归并排序
- * 递归实现
+ * 非递归实现
  */
-public class MergeSort {
-
+public class MergeSortNoRecursive {
     public void sort(int[] data) {
         if (data == null || data.length < 2) {
             return;
         }
-        sortInner(data, 0, data.length - 1);
-    }
-
-    /**
-     * [start,end] 闭区间
-     */
-    private void sortInner(int[] data, int start, int end) {
-        if (start >= end) {
-            return;
+        for (int gap = 2; gap < data.length; gap *= 2) {
+            sortInner(data, gap);
         }
-        int middle = (start + end) >> 1;
-        // 必须分为 [start, middle] 和 [middle+1,end] 两个
-        // 如果分为 [start, middle-1] 和 [middle,end]，当end-start=1时，就会无限递归
-        sortInner(data, start, middle);
-        sortInner(data, middle + 1, end);
-        merge(data, start, middle, end);
     }
 
-    /**
-     * 标准的二路归并
-     */
+    private void sortInner(int[] data, int gap) {
+        // 将整体分为多个长度为 gap 的小组，进行排序
+        for (int i = 0; i < data.length; i += gap) {
+            int end = i + gap >= data.length ? data.length - 1 : i + gap;
+            merge(data, i, (i + end) >> 1, end);
+        }
+    }
+
     private void merge(int[] data, int start, int middle, int end) {
         int[] tmp = new int[end - start + 1];
         // 合并
@@ -60,9 +51,9 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        int[] array = ArrayUtils.newIntArray(5, 20);
+        int[] array = ArrayUtils.newIntArray(7, 20);
         System.out.println(Arrays.toString(array));
-        MergeSort sort = new MergeSort();
+        MergeSortNoRecursive sort = new MergeSortNoRecursive();
         sort.sort(array);
         System.out.println(Arrays.toString(array));
     }
