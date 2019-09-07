@@ -1,24 +1,35 @@
 package tree;
 
-import data.BinaryTreeNode;
-import utils.QueueUtils;
-
+import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * leetcode 226
+ * 反转二叉树，镜像二叉树
+ * 广度优先遍历，交换左右节点
+ */
 public class MirrorTree {
-
-    public void mirror(BinaryTreeNode<Integer> tree) {
-        Queue<BinaryTreeNode<Integer>> queue = QueueUtils.newQueue(tree);
-        BinaryTreeNode<Integer> c = null;
-        while (!queue.isEmpty()) {
-            c = queue.poll();
-            swap(c);
-            QueueUtils.addChildrenToQueue(queue, c);
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
         }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            swapChild(node);
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        return root;
     }
 
-    private void swap(BinaryTreeNode<Integer> node) {
-        BinaryTreeNode<Integer> t = node.left;
+    private void swapChild(TreeNode node) {
+        TreeNode t = node.left;
         node.left = node.right;
         node.right = t;
     }
