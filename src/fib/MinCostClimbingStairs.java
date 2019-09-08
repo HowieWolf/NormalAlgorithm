@@ -1,4 +1,4 @@
-package best;
+package fib;
 
 /**
  * 746. 使用最小花费爬楼梯

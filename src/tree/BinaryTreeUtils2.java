@@ -1,7 +1,6 @@
-package utils;
+package tree;
 
 import data.BinaryTreeNode;
-import tree.TreeNode;
 
 import java.util.LinkedList;
 import java.util.Queue;

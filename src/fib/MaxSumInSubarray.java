@@ -1,4 +1,4 @@
-package best;
+package fib;
 
 /**
  * leetcode 53

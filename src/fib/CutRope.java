@@ -1,4 +1,4 @@
-package best;
+package fib;
 
 import utils.ArrayUtils;
 
