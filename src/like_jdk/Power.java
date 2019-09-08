@@ -1,4 +1,4 @@
-package problem;
+package like_jdk;
 
 /**
  * 剑指 16

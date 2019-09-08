@@ -1,4 +1,4 @@
-package problem;
+package like_jdk;
 
 /**
  * 将字符串转换为 int

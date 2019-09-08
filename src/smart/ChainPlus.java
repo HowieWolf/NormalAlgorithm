@@ -1,4 +1,4 @@
-package problem;
+package smart;
 
 /**
  * 连加 1+2+3+...+n
