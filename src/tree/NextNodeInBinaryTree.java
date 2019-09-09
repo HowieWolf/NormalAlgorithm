@@ -1,5 +1,7 @@
 package tree;
 
+import data.TreeNode;
+
 /**
  * 给定一个二叉树和其中一个节点，找出中序遍历的下一个节点。节点有一个指向父节点的指针
  * <p>
